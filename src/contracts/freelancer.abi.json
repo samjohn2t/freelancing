@@ -25,6 +25,11 @@
                 "internalType": "bool",
                 "name": "_isHired",
                 "type": "bool"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_ratingLength",
+                "type": "uint256"
             }
         ],
         "name": "addFreelancer",
@@ -71,6 +76,21 @@
                 "internalType": "bool",
                 "name": "",
                 "type": "bool"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
             }
         ],
         "stateMutability": "view",
@@ -98,6 +118,24 @@
             }
         ],
         "name": "hireFreelancer",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_index",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "rating",
+                "type": "uint256"
+            }
+        ],
+        "name": "rateFreelancer",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"

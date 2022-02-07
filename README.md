@@ -1,10 +1,11 @@
-This dapp is aimed at aiding the freelance world. This basic dapp is Where freelancers can come post their job description and what they do while others looking for their services can come and use their services for a fee proposed by the freelancer. This dapp is built on the blockchain to show the idea of communicating directly with your freelancers without the platforms charging exorbitant and hidden fees. This was built using react, bootstrap and solidity
+
+This dapp is aimed at aiding the freelance world. This basic dapp is Where freelancers can come post their job description and what they do while others looking for their services can come and use their services for a fee proposed by the freelancer. If a freelancer is hired, the option to rate the freelancer pops up and  an average is calculated based on the ratings given. This dapp is built on the blockchain to show the idea of communicating directly with your freelancers without the platforms charging exorbitant and hidden fees. This was built using react, bootstrap and solidity
 
 ## Things to be done
 1) Adding a chat platform for the freelancer and client
 2) Adding an edit feature where the freelancer can edit prices
 
-Project Link: https://61eff3b096cb6e000756c7b3--zealous-bell-f40cd8.netlify.app/
+Project Link: https://zealous-bell-f40cd8.netlify.app/
 
 
 # Install

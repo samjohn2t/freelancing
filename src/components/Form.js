@@ -10,10 +10,6 @@ const Form = (props) => {
     event.preventDefault();
     console.log(name, description, image, amount);
     props.addFreelancer(name, description, image, amount)
-    setName("");
-    setDescription("");
-    setImage("");
-    setAmount("");
   };
 
   return (

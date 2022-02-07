@@ -12,7 +12,7 @@ import Form from "./components/Form";
 
 const ERC20_DECIMALS = 18;
 
-const contractAddress = "0x7Df5f6906A9b4298f0767b1c2d79f8d6Cb84Bdef";
+const contractAddress = "0xf001F809d0AA073408aF1ceB414d841044467D16";
 const cUSDContractAddress = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1";
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
   const [kit, setKit] = useState(null);
   const [freelancers, setFreelancers] = useState([]);
   const [cUSDBalance, setcUSDBalance] = useState(0);
+  const [averageRating, setAverageRating] = useState(0);
 
   useEffect(() => {
     celoConnect();
@@ -95,18 +96,22 @@ function App() {
             jobDescription: freelancer[3],
             amount: freelancer[4],
             isHired: freelancer[5],
+            ratings: freelancer[6],
+            ratingLength: freelancer[7],
+            averageRating: freelancer[8],
           });
         });
         _freelancers.push(_freelancer);
       }
       const freelancers = await Promise.all(_freelancers);
+      console.log(freelancers);
       setFreelancers(freelancers);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const hireFreelancer = async (index,_amount) => {
+  const hireFreelancer = async (index, _amount) => {
     const cUSDContract = new kit.web3.eth.Contract(IERC, cUSDContractAddress);
     try {
       await cUSDContract.methods
@@ -122,13 +127,25 @@ function App() {
   const addFreelancer = async (name, description, image, _amount) => {
     const cUSDContract = new kit.web3.eth.Contract(IERC, cUSDContractAddress);
     try {
-      const amount = new BigNumber(1).shiftedBy(ERC20_DECIMALS).toString();
+      const amount = new BigNumber(_amount).shiftedBy(ERC20_DECIMALS).toString();
       await cUSDContract.methods
         .approve(contractAddress, amount)
         .send({ from: address });
       await contract.methods
-        .addFreelancer(name, image, description, amount, false)
+        .addFreelancer(name, image, description, amount, false, 1)
         .send({ from: address });
+      getFreelancer();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const rateFreelancer = async (index, rating) => {
+    try {
+      await contract.methods
+        .rateFreelancer(index, rating)
+        .send({ from: address });
+      setAverageRating(averageRating);
       getFreelancer();
     } catch (error) {
       console.log(error);
@@ -138,8 +155,13 @@ function App() {
   return (
     <div>
       <Header balance={cUSDBalance} />
-      <Main freelancers={freelancers} hireFreelancer = {hireFreelancer}/>
-      <Form addFreelancer={addFreelancer} />
+      <Main
+        freelancers={freelancers}
+        hireFreelancer={hireFreelancer}
+        rateFreelancer={rateFreelancer}
+        averageRating={averageRating}
+      />
+      <Form addFreelancer = {addFreelancer}/>
     </div>
   );
 }
