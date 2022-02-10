@@ -24,6 +24,9 @@ contract Freelance{
         string jobDescription;
         uint amount;
         bool isHired;
+        uint ratings;
+        uint ratingLength;
+        uint averageRating;
     }
 
     mapping(uint => Freelancer) freelancers;
@@ -37,7 +40,8 @@ contract Freelance{
         string memory _imageUrl,
         string memory _jobDescription,
         uint _amount,
-        bool _isHired    
+        bool _isHired,
+        uint _ratingLength    
     )public{
         require(
             IERC20Token(cUsdTokenAddress).transferFrom(
@@ -53,7 +57,10 @@ contract Freelance{
             _imageUrl,
             _jobDescription,
             _amount,
-            _isHired
+            _isHired,
+            0,
+            _ratingLength,
+            0
         );
         freelancerLength++;       
     }
@@ -64,7 +71,10 @@ contract Freelance{
         string memory,
         string memory,
         uint,
-        bool
+        bool,
+        uint,
+        uint,
+        uint
     ){
         Freelancer storage freelancer = freelancers[_index];
         return(
@@ -73,8 +83,18 @@ contract Freelance{
             freelancer.imageURL,
             freelancer.jobDescription,
             freelancer.amount,
-            freelancer.isHired
+            freelancer.isHired,
+            freelancer.ratings,
+            freelancer.ratingLength,
+            freelancer.averageRating
         );
+    }
+
+    function rateFreelancer(uint _index, uint rating) public{
+        require((_index <= 5 && _index >= 0), "Must not be greater than 5 and not less than 0");
+        freelancers[_index].ratings = (freelancers[_index].ratings + rating) ;
+        freelancers[_index].averageRating = freelancers[_index].ratings / (freelancers[_index].ratingLength);
+        freelancers[_index].ratingLength++;
     }
 
     function hireFreelancer(uint _index)public{
