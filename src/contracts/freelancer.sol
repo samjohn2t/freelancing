@@ -33,21 +33,26 @@ contract Freelance{
     uint freelancerLength = 0;
 
     address internal cUsdTokenAddress = 0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1;
-    address internal mainAddress = 0xb7BF999D966F287Cd6A1541045999aD5f538D3c6;
+    address internal owner;
+    uint internal fee;
+    
+    constructor(uint _fee){
+    owner = msg.sender;
+    fee = _fee;
+    }
 
     function addFreelancer(
         string memory _name,
         string memory _imageUrl,
         string memory _jobDescription,
         uint _amount,
-        bool _isHired,
         uint _ratingLength    
     )public{
         require(
             IERC20Token(cUsdTokenAddress).transferFrom(
                 msg.sender,
-                mainAddress,
-                1000000000000000000
+                owner,
+                fee
             ),
             "Transaction could not be performed"
         );
@@ -57,7 +62,7 @@ contract Freelance{
             _imageUrl,
             _jobDescription,
             _amount,
-            _isHired,
+            false,
             0,
             _ratingLength,
             0
@@ -108,6 +113,12 @@ contract Freelance{
         );
         freelancers[_index].isHired = true;
     }
+    
+    function updateFee(uint _fee) public{
+    require(msg.sender == owner, "Only owner can call this function");
+    fee = _fee;
+    }
+    
 
     function getFreelancerLength() public view returns (uint) {
         return (freelancerLength);
